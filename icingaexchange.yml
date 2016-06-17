@@ -17,8 +17,3 @@ releases:
         url: "file:///check_apache_status.pl"
         description: "Bugfix release"
         checksum: 57214d7fa0771482fecae33215ec96a5
-      -
-        name: nagios-plugins-apache_status.spec
-        url: "file://nagios-plugins-apache_status.spec"
-        description: "Spec file for building a rpm"
-        checksum: 9ba6da4515ef6ba3693e6d7df905319b
