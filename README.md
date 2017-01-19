@@ -34,9 +34,13 @@ Usage: check_apache_status.pl [OPTIONS]
 
    uri, default /server-status
 
- --ssl
+ -s, --ssl
 
    use https instead of http
+
+ -N, --no\_validate
+
+   do not validate the SSL certificate chain
 
  -w, --warning=STRING
 

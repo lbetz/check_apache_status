@@ -6,7 +6,7 @@ use Monitoring::Plugin::Threshold;
 use LWP::UserAgent;
 use Data::Dumper;
 
-our $VERSION = '1.0.1';
+our $VERSION = '1.1.0';
 
 our ( $plugin, $option );
 
@@ -40,8 +40,14 @@ $options->arg(
 );
 
 $options->arg(
-  spec     => 'ssl|s+',
+  spec     => 'ssl|s',
   help     => 'use https instead of http',
+  required => 0,
+);
+
+$options->arg(
+  spec     => 'no_validate|N',
+  help     => 'do not validate the SSL certificate chain',
   required => 0,
 );
 
@@ -77,6 +83,10 @@ $threshold_IdleWorkers = Monitoring::Plugin::Threshold->set_thresholds(
 );
 
 my $ua = LWP::UserAgent->new( protocols_allowed => ['http','https'], timeout => 15);
+
+if (defined($options->no_validate)) {
+  $ua->ssl_opts ( verify_hostname => 0 );
+}
 
 if (defined($options->ssl)) {
   $proto = 'https://';

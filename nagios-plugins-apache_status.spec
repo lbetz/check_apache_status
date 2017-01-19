@@ -4,7 +4,7 @@
 
 Name:          nagios-plugins-apache_status
 Summary:       Nagios Plugins - check_apache_status.pl
-Version:       1.0.1
+Version:       1.1.0
 Url:           http://github.com/lbetz/nagios-plugins
 License:       GPL-2.0+
 Group:         System/Monitoring
@@ -24,6 +24,10 @@ BuildRoot:     %{_tmppath}/%{name}-%{version}-build
 %if 0%{?fedora} || 0%{?rhel} || 0%{?centos}
 Release:       1%{?dist}
 Requires:      nagios-common
+%endif
+
+%if 0%{?fedora} >= 16 || 0%{?rhel} >= 7 || 0%{?centos} >= 7
+Requires:      perl(LWP::Protocol::https)
 %endif
 
 %description
@@ -49,5 +53,8 @@ rm -rf %buildroot
 %{_libdir}/nagios/plugins/check_apache_status.pl
 
 %changelog
+* Thu Jan 19 2017 Lennart Betz <lennart.betz@netways.de>
+- feature version 1.1.0
+- LWP::Protocol::https is required on redhat
 * Mon Apr 29 2016 Lennart Betz <lennart.betz@netways.de>
 - initial setup

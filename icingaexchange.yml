@@ -9,11 +9,11 @@ type: Plugin
 license: gplv2
 releases:
   -
-    name: 1.0.1
-    description: "1.0.1 Release"
+    name: 1.1.0
+    description: "1.1.0 Release"
     files:
       -
         name: check_apache_status.pl
         url: "file:///check_apache_status.pl"
-        description: "Bugfix release"
-        checksum: 57214d7fa0771482fecae33215ec96a5
+        description: "Feature release"
+        checksum: 90f447482a786383841fe0e38132fe60
