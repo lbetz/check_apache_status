@@ -30,6 +30,14 @@ Usage: check_apache_status.pl [OPTIONS]
 
    port, default 80 (http) or 443 (https)
 
+ -U, --username
+
+  username for basic auth, requires password
+
+ -P, password
+
+  assword for basic auth, requires username
+
  -u, --uri=STRING
 
    uri, default /server-status

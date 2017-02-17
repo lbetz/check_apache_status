@@ -4,8 +4,8 @@
 
 Name:          nagios-plugins-apache_status
 Summary:       Nagios Plugins - check_apache_status.pl
-Version:       1.1.0
-Url:           http://github.com/lbetz/nagios-plugins
+Version:       1.2.0
+Url:           http://github.com/lbetz/check_apache_status
 License:       GPL-2.0+
 Group:         System/Monitoring
 Source0:       %{lname}-%{version}.tar.gz
@@ -53,6 +53,9 @@ rm -rf %buildroot
 %{_libdir}/nagios/plugins/check_apache_status.pl
 
 %changelog
+* Fri Feb 17 2017 Lennart Betz <lennart.betz@netways.de>
+- feature version 1.2.0
+- fix projekt website url in spec
 * Thu Jan 19 2017 Lennart Betz <lennart.betz@netways.de>
 - feature version 1.1.0
 - LWP::Protocol::https is required on redhat

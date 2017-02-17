@@ -6,7 +6,7 @@ use Monitoring::Plugin::Threshold;
 use LWP::UserAgent;
 use Data::Dumper;
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.2.0';
 
 our ( $plugin, $option );
 
@@ -37,6 +37,18 @@ $options->arg(
   help     => 'uri, default /server-status',
   required => 0,
   default => '/server-status',
+);
+
+$options->arg(
+  spec     => 'username|U=s',
+  help     => 'username for basic auth',
+  required => 0,
+);
+
+$options->arg(
+  spec     => 'password|P=s',
+  help     => 'password for basic auth',
+  required => 0,
 );
 
 $options->arg(
@@ -82,6 +94,17 @@ $threshold_IdleWorkers = Monitoring::Plugin::Threshold->set_thresholds(
   critical => $critical[2],
 );
 
+## Username without password
+$plugin->nagios_exit( UNKNOWN, 'If you specify an username, you have to set a password too!') if ( ($options->username  ne '') && ($options->password eq '') );
+
+## Password without username
+$plugin->nagios_exit( UNKNOWN, 'If you specify a password, you have to set an username too!') if ( ($options->username  eq '') && ($options->password ne '') );
+
+## Set account
+if ( ($options->username ne '') && ($options->password ne '') ) {
+  $account = $options->username.':'.$options->password.'@';
+}
+
 my $ua = LWP::UserAgent->new( protocols_allowed => ['http','https'], timeout => 15);
 
 if (defined($options->no_validate)) {
@@ -95,9 +118,9 @@ if (defined($options->ssl)) {
 }
 
 if (defined($options->port)) {
-  $request = HTTP::Request->new(GET => $proto.$options->hostname.':'.$options->port.$options->uri.'/?auto');
+  $request = HTTP::Request->new(GET => $proto.$account.$options->hostname.':'.$options->port.$options->uri.'/?auto');
 } else {
-  $request = HTTP::Request->new(GET => $proto.$options->hostname.$options->uri.'/?auto');
+  $request = HTTP::Request->new(GET => $proto.$account.$options->hostname.$options->uri.'/?auto');
 }
 
 $response = $ua->request($request);
