@@ -4,9 +4,9 @@ use Monitoring::Plugin;
 use Monitoring::Plugin::Getopt;
 use Monitoring::Plugin::Threshold;
 use LWP::UserAgent;
-use Data::Dumper;
+use HTTP::Status qw(:constants :is status_message);
 
-our $VERSION = '1.2.0';
+our $VERSION = '1.3.0';
 
 our ( $plugin, $option );
 
@@ -16,7 +16,7 @@ $plugin = Monitoring::Plugin->new( shortname => '' );
 $options = Monitoring::Plugin::Getopt->new(
   usage   => 'Usage: %s [OPTIONS]',
   version => $VERSION,
-  url     => 'https://github.com/lbetz/nagios-plugins',
+  url     => 'https://github.com/lbetz/check_apache_status',
   blurb   => 'Check apache server status',
 );
 
@@ -75,8 +75,28 @@ $options->arg(
   required => 0,
 );
 
+$options->arg(
+  spec     => 'unreachable|R',
+  help     => 'CRITICAL if socket timed out or http code >= 500',
+  required => 0,
+);
+
 $options->getopts();
+
+# if socket timed out or http code >= 500
+my $unreachable = 'UNKNOWN';
+if (defined($options->unreachable)) {
+  $unreachable = 'CRITICAL';
+}
+
 alarm $options->timeout;
+# override default alarm handler
+$SIG{ALRM} = sub {
+  $plugin->die(
+    sprintf("plugin timed out (timeout %ss)",
+      $options->timeout), $unreachable);
+};
+
 
 my @warning = split(",", $options->warning);
 my @critical = split(",", $options->critical);
@@ -168,8 +188,8 @@ if ($response->is_success) {
 
   $plugin->nagios_exit( $status, $output );
 
+} elsif ( $response->code >= HTTP_INTERNAL_SERVER_ERROR ) {
+  $plugin->plugin_exit( $unreachable, $response->status_line );
 } else {
-
-  $plugin->plugin_exit( UNKNOWN, $response->headers->title );
-
+  $plugin->plugin_exit( UNKNOWN, $response->status_line );
 }

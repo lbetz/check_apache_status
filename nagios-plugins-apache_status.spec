@@ -4,7 +4,7 @@
 
 Name:          nagios-plugins-apache_status
 Summary:       Nagios Plugins - check_apache_status.pl
-Version:       1.2.0
+Version:       1.3.0
 Url:           http://github.com/lbetz/check_apache_status
 License:       GPL-2.0+
 Group:         System/Monitoring
@@ -53,8 +53,12 @@ rm -rf %buildroot
 %{_libdir}/nagios/plugins/check_apache_status.pl
 
 %changelog
+* Tue May 06 2017 Lennart Betz <lennart.betz@netways.de>
+- feature version 1.3.0
+- feature add option unreacheable
 * Fri Feb 17 2017 Lennart Betz <lennart.betz@netways.de>
 - feature version 1.2.0
+- feature add option no_validate
 - fix projekt website url in spec
 * Thu Jan 19 2017 Lennart Betz <lennart.betz@netways.de>
 - feature version 1.1.0

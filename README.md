@@ -50,6 +50,10 @@ Usage: check_apache_status.pl [OPTIONS]
 
    do not validate the SSL certificate chain
 
+ -R, --unreachable
+
+   CRITICAL if socket timed out or http code >= 500
+
  -w, --warning=STRING
 
    warning threshold
