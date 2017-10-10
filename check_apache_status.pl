@@ -150,7 +150,7 @@ $response = $ua->request($request);
 if ($response->is_success) {
 
   unless ($response->content =~ /(?s).*BusyWorkers:\s([0-9]+).*IdleWorkers:\s([0-9]+).*Scoreboard:\s(.*)$/) {
-    $plugin->plugin_exit( UNKNOWN, $response->base );
+    $plugin->plugin_exit( UNKNOWN, "No status information found at ".$response->base );
   }
 
   $BusyWorkers = $1;
