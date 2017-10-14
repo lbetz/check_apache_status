@@ -36,7 +36,7 @@ Usage: check_apache_status.pl [OPTIONS]
 
  -P, password
 
-  assword for basic auth, requires username
+  password for basic auth, requires username
 
  -u, --uri=STRING
 

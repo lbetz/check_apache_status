@@ -138,15 +138,20 @@ if (defined($options->ssl)) {
 }
 
 if (defined($options->port)) {
-  $request = HTTP::Request->new(GET => $proto.$account.$options->hostname.':'.$options->port.$options->uri.'/?auto');
+  $request = HTTP::Request->new(GET => $proto.$account.$options->hostname.':'.$options->port.$options->uri.'?auto');
 } else {
-  $request = HTTP::Request->new(GET => $proto.$account.$options->hostname.$options->uri.'/?auto');
+  $request = HTTP::Request->new(GET => $proto.$account.$options->hostname.$options->uri.'?auto');
 }
+
+
 
 $response = $ua->request($request);
 
 if ($response->is_success) {
-  $response->content =~ /(?s).*BusyWorkers:\s([0-9]+).*IdleWorkers:\s([0-9]+).*Scoreboard:\s(.*)$/;
+
+  unless ($response->content =~ /(?s).*BusyWorkers:\s([0-9]+).*IdleWorkers:\s([0-9]+).*Scoreboard:\s(.*)$/) {
+    $plugin->plugin_exit( UNKNOWN, "No status information found at ".$response->base );
+  }
 
   $BusyWorkers = $1;
   $IdleWorkers = $2;
