@@ -1,5 +1,4 @@
-Steps to setup a local test environment on macOS
-
+# Steps to setup a local test environment on macOS
 
 - Install plenv
   ```brew install plenv```
@@ -26,8 +25,7 @@ Steps to setup a local test environment on macOS
   ```cpanm HTTP::Status```
 
 
-
-If you want to test against https:
+For SSL support:
 
 ```brew install openssl```
 ```cpanm Net::SSLeay```

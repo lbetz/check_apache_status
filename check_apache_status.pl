@@ -113,6 +113,18 @@ $threshold_IdleWorkers = Monitoring::Plugin::Threshold->set_thresholds(
   warning  => $warning[2],
   critical => $critical[2],
 );
+$threshold_ReqPerSec = Monitoring::Plugin::Threshold->set_thresholds(
+  warning  => $warning[3],
+  critical => $critical[3],
+);
+$threshold_BytesPerSec = Monitoring::Plugin::Threshold->set_thresholds(
+  warning  => $warning[4],
+  critical => $critical[4],
+);
+$threshold_BytesPerReq = Monitoring::Plugin::Threshold->set_thresholds(
+  warning  => $warning[5],
+  critical => $critical[5],
+);
 
 ## Username without password
 $plugin->nagios_exit( UNKNOWN, 'If you specify an username, you have to set a password too!') if ( ($options->username  ne '') && ($options->password eq '') );
@@ -143,13 +155,11 @@ if (defined($options->port)) {
   $request = HTTP::Request->new(GET => $proto.$account.$options->hostname.$options->uri.'?auto');
 }
 
-
-
 $response = $ua->request($request);
 
 if ($response->is_success) {
 
-  unless ($response->content =~ /(?s).*BusyWorkers:\s([0-9]+).*IdleWorkers:\s([0-9]+).*Scoreboard:\s(.*)$/) {
+  unless ($response->content =~ /(?s).*BusyWorkers:\s([0-9]+).*IdleWorkers:\s([0-9]+).*Scoreboard:\s(.*)/) {
     $plugin->plugin_exit( UNKNOWN, "No status information found at ".$response->base );
   }
 
@@ -157,7 +167,14 @@ if ($response->is_success) {
   $IdleWorkers = $2;
   $OpenSlots   = ($3 =~ tr/\.//);
 
-  $output = 'OpenSlots:'.$OpenSlots.' BusyWorkers:'.$BusyWorkers.' IdleWorkers:'.$IdleWorkers;
+  $response->content =~ /(?s).*ReqPerSec:\s([0-9\.]+).*BytesPerSec:\s([0-9\.]+).*BytesPerReq:\s([0-9\.]+)/;
+
+  $ReqPerSec = $1;
+  $BytesPerSec = $2;
+  $BytesPerReq = $3;
+
+  $output = 'OpenSlots:'.$OpenSlots.' BusyWorkers:'.$BusyWorkers.' IdleWorkers:'.$IdleWorkers.
+    ' ReqPerSec:'.$ReqPerSec.' BytesPerSec:'.$BytesPerSec.' BytesPerReq:'.$BytesPerReq;
 
   $plugin->add_perfdata(
     label => 'OpenSlots',
@@ -165,12 +182,14 @@ if ($response->is_success) {
     uom   => q{},
     threshold => $threshold_OpenSlots,
   );
+
   $plugin->add_perfdata(
     label => 'BusyWorkers',
     value => $BusyWorkers,
     uom   => q{},
     threshold => $threshold_BusyWorkers,
   );
+
   $plugin->add_perfdata(
     label => 'IdleWorkers',
     value => $IdleWorkers,
@@ -178,10 +197,35 @@ if ($response->is_success) {
     threshold => $threshold_IdleWorkers,
   );
 
+  $plugin->add_perfdata(
+    label => 'ReqPerSec',
+    value => $ReqPerSec,
+    uom   => q{},
+    threshold => $threshold_ReqPerSec,
+  );
+
+  $plugin->add_perfdata(
+    label => 'BytesPerSec',
+    value => $BytesPerSec,
+    uom   => B,
+    threshold => $threshold_BytesPerSec,
+  );
+
+  $plugin->add_perfdata(
+    label => 'BytesPerReq',
+    value => $BytesPerReq,
+    uom   => B,
+    threshold => $threshold_BytesPerReq,
+  );
+
+
   my @thresholds = (
     $threshold_OpenSlots->get_status($OpenSlots),
     $threshold_BusyWorkers->get_status($BusyWorkers),
-    $threshold_IdleWorkers->get_status($IdleWorkers)
+    $threshold_IdleWorkers->get_status($IdleWorkers),
+    $threshold_ReqPerSec->get_status($ReqPerSec),
+    $threshold_BytesPerSec->get_status($BytesPerSec),
+    $threshold_BytesPerReq->get_status($BytesPerReq)
   );
 
   my $status = 0;
