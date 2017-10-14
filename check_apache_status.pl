@@ -6,7 +6,7 @@ use Monitoring::Plugin::Threshold;
 use LWP::UserAgent;
 use HTTP::Status qw(:constants :is status_message);
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.4.0';
 
 our ( $plugin, $option );
 
@@ -159,19 +159,21 @@ $response = $ua->request($request);
 
 if ($response->is_success) {
 
-  unless ($response->content =~ /(?s).*BusyWorkers:\s([0-9]+).*IdleWorkers:\s([0-9]+).*Scoreboard:\s(.*)/) {
+  unless ($response->content =~ /(?s).*ReqPerSec:\s([0-9\.]+).*BytesPerSec:\s([0-9\.]+).*BusyWorkers:\s([0-9]+).*IdleWorkers:\s([0-9]+).*Scoreboard:\s(.*)/) {
     $plugin->plugin_exit( UNKNOWN, "No status information found at ".$response->base );
   }
 
-  $BusyWorkers = $1;
-  $IdleWorkers = $2;
-  $OpenSlots   = ($3 =~ tr/\.//);
-
-  $response->content =~ /(?s).*ReqPerSec:\s([0-9\.]+).*BytesPerSec:\s([0-9\.]+).*BytesPerReq:\s([0-9\.]+)/;
-
   $ReqPerSec = $1;
   $BytesPerSec = $2;
-  $BytesPerReq = $3;
+  $BusyWorkers = $3;
+  $IdleWorkers = $4;
+  $OpenSlots   = ($5 =~ tr/\.//);
+
+  $response->content =~ /(?s).*BytesPerReq:\s([0-9\.]+)/;
+  $BytesPerReq = $1;
+  unless ($BytesPerReq) {
+    $BytesPerReq = 0;
+  }
 
   $output = 'OpenSlots:'.$OpenSlots.' BusyWorkers:'.$BusyWorkers.' IdleWorkers:'.$IdleWorkers.
     ' ReqPerSec:'.$ReqPerSec.' BytesPerSec:'.$BytesPerSec.' BytesPerReq:'.$BytesPerReq;

@@ -4,7 +4,7 @@
 
 Name:          nagios-plugins-apache_status
 Summary:       Nagios Plugins - check_apache_status.pl
-Version:       1.3.1
+Version:       1.4.0
 Url:           http://github.com/lbetz/check_apache_status
 License:       GPL-2.0+
 Group:         System/Monitoring
@@ -54,7 +54,7 @@ rm -rf %buildroot
 
 %changelog
 * Thu Oct 12 2017 Yves Vogl <yves.vogl@dock42.com>
-- feature version 1.3.1
+- feature version 1.4.0
 - feature: added requests per second, bytes per second, bytes per request as metrics
 - feature: Improved error handling and documentation
 * Tue May 06 2017 Lennart Betz <lennart.betz@netways.de>
