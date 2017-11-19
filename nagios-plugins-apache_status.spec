@@ -4,7 +4,7 @@
 
 Name:          nagios-plugins-apache_status
 Summary:       Nagios Plugins - check_apache_status.pl
-Version:       1.4.0
+Version:       1.4.1
 Url:           http://github.com/lbetz/check_apache_status
 License:       GPL-2.0+
 Group:         System/Monitoring
@@ -53,6 +53,9 @@ rm -rf %buildroot
 %{_libdir}/nagios/plugins/check_apache_status.pl
 
 %changelog
+* Sun Nov 19 2017 Lennart Betz <lennart.betz@netways.com>
+- Bug fix release version 1.4.1
+- fix #9 detect idle waits
 * Thu Oct 12 2017 Yves Vogl <yves.vogl@dock42.com>
 - feature version 1.4.0
 - feature: added requests per second, bytes per second, bytes per request as metrics
