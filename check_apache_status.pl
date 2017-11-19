@@ -167,7 +167,7 @@ if ($response->is_success) {
   $BytesPerSec = $2;
   $BusyWorkers = $3;
   $IdleWorkers = $4;
-  $OpenSlots   = ($5 =~ tr/\.//);
+  $OpenSlots   = ($5 =~ tr/[._]//);
 
   $response->content =~ /(?s).*BytesPerReq:\s([0-9\.]+)/;
   $BytesPerReq = $1;
