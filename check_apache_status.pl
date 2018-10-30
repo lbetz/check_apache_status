@@ -141,6 +141,7 @@ my $ua = LWP::UserAgent->new( protocols_allowed => ['http','https'], timeout => 
 
 if (defined($options->no_validate)) {
   $ua->ssl_opts ( verify_hostname => 0 );
+  $ua->ssl_opts ( SSL_verify_mode => 0 );
 }
 
 if (defined($options->ssl)) {
