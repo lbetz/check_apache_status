@@ -6,7 +6,7 @@ use Monitoring::Plugin::Threshold;
 use LWP::UserAgent;
 use HTTP::Status qw(:constants :is status_message);
 
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.2';
 
 our ( $plugin, $option );
 
@@ -138,6 +138,7 @@ if ( ($options->username ne '') && ($options->password ne '') ) {
 }
 
 my $ua = LWP::UserAgent->new( protocols_allowed => ['http','https'], timeout => 15);
+$ua->ssl_opts ( SSL_cipher_list => '' );
 
 if (defined($options->no_validate)) {
   $ua->ssl_opts ( verify_hostname => 0 );
