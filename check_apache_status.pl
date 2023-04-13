@@ -1,12 +1,13 @@
 #!/usr/bin/perl
 
+
 use Monitoring::Plugin;
 use Monitoring::Plugin::Getopt;
 use Monitoring::Plugin::Threshold;
 use LWP::UserAgent;
 use HTTP::Status qw(:constants :is status_message);
 
-our $VERSION = '1.4.2';
+our $VERSION = '1.4.3';
 
 our ( $plugin, $option );
 
@@ -34,9 +35,9 @@ $options->arg(
 
 $options->arg(
   spec     => 'uri|u=s',
-  help     => 'uri, default /server-status',
+  help     => 'uri, default /server-status?auto',
   required => 0,
-  default => '/server-status',
+  default => '/server-status?auto',
 );
 
 $options->arg(
@@ -161,7 +162,7 @@ $response = $ua->request($request);
 
 if ($response->is_success) {
 
-  unless ($response->content =~ /(?s).*ReqPerSec:\s([0-9\.]+).*BytesPerSec:\s([0-9\.]+).*BusyWorkers:\s([0-9]+).*IdleWorkers:\s([0-9]+).*Scoreboard:\s(.*)/) {
+  unless ($response->content =~ /(?s).*ReqPerSec:\s([0-9\.]+).*BytesPerSec:\s([0-9\.]+).*BusyWorkers:\s([0-9]+).*IdleWorkers:\s([0-9]+).*Scoreboard:\s(\S*)/) {
     $plugin->plugin_exit( UNKNOWN, "No status information found at ".$response->base );
   }
 
