@@ -2,14 +2,14 @@
 
 %define lname	check_apache_status
 
-Name:          nagios-plugins-apache_status
+Name:          netways-plugins-apache-status
 Summary:       Nagios Plugins - check_apache_status.pl
 Version:       1.4.3
 Url:           http://github.com/lbetz/check_apache_status
 License:       GPL-2.0+
 Group:         System/Monitoring
 Source0:       %{lname}-%{version}.tar.gz
-Provides:      nagios-plugins-apache_status = %{version}-%{release}
+Provides:      netways-plugins-apache-status = %{version}-%{release}
 Obsoletes:     nagios-plugins-apache_status < %{version}-%{release}
 Requires:      perl(Monitoring::Plugin)
 Requires:      perl(LWP::UserAgent)
@@ -56,6 +56,7 @@ rm -rf %buildroot
 * Fri Apr 14 2023 Lennart Betz <lennart.betz@netways.de> 1.4.3-1
 - Bugfix release version 1.4.3
 - fix #13 Extend status?auto to get the whole Scoreboard
+- Rename package to netways-plugins-apache-status
 * Mon Apr 20 2020 Lennart Betz <lennart.betz@netways.de> 1.4.2-1
 - Bugfix release version 1.4.2
 - fix #12 fix for SSLv3 errors
