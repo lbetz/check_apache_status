@@ -1,0 +1,27 @@
+This work was packaged for Debian by:
+  
+    Lennart Betz <lennart.betz@netways.de> on Mon, 01 Mar 2021
+
+It was downloaded from:
+
+    https://github.com/lbetz/check_apache_status
+
+Upstream Author(s):
+
+    Lennart Betz <lennart.betz@netways.de>
+    Sylvia van Os
+
+Copyright:
+
+    Copyright (C) 2016-2021 Lennart Betz <lennart.betz@netways.de>
+
+License:
+
+    GPL 3
+
+The Debian packaging is:
+
+    Copyright (C) 2021 Lennart Betz <lennart.betz@netways.de>
+
+and is licensed under the GPL version 3,
+see "/usr/share/common-licenses/GPL-3".

@@ -4,7 +4,7 @@
 
 Name:          nagios-plugins-apache_status
 Summary:       Nagios Plugins - check_apache_status.pl
-Version:       1.4.1
+Version:       1.4.3
 Url:           http://github.com/lbetz/check_apache_status
 License:       GPL-2.0+
 Group:         System/Monitoring
@@ -53,22 +53,28 @@ rm -rf %buildroot
 %{_libdir}/nagios/plugins/check_apache_status.pl
 
 %changelog
-* Sun Nov 19 2017 Lennart Betz <lennart.betz@netways.com>
-- Bug fix release version 1.4.1
+* Fri Apr 14 2023 Lennart Betz <lennart.betz@netways.de> 1.4.3-1
+- Bugfix release version 1.4.3
+- fix #13 Extend status?auto to get the whole Scoreboard
+* Mon Apr 20 2020 Lennart Betz <lennart.betz@netways.de> 1.4.2-1
+- Bugfix release version 1.4.2
+- fix #12 fix for SSLv3 errors
+* Sun Nov 19 2017 Lennart Betz <lennart.betz@netways.de> 1.4.1-1
+- Bugfix release version 1.4.1
 - fix #9 detect idle waits
-* Thu Oct 12 2017 Yves Vogl <yves.vogl@dock42.com>
+* Thu Oct 12 2017 Yves Vogl <yves.vogl@dock42.com> 1.4.0-1
 - feature version 1.4.0
 - feature: added requests per second, bytes per second, bytes per request as metrics
 - feature: Improved error handling and documentation
-* Tue May 06 2017 Lennart Betz <lennart.betz@netways.de>
+* Tue May 06 2017 Lennart Betz <lennart.betz@netways.de> 1.3.0-1
 - feature version 1.3.0
 - feature add option unreacheable
-* Fri Feb 17 2017 Lennart Betz <lennart.betz@netways.de>
+* Fri Feb 17 2017 Lennart Betz <lennart.betz@netways.de> 1.2.0-1
 - feature version 1.2.0
 - feature add option no_validate
 - fix projekt website url in spec
-* Thu Jan 19 2017 Lennart Betz <lennart.betz@netways.de>
+* Thu Jan 19 2017 Lennart Betz <lennart.betz@netways.de> 1.1.0-1
 - feature version 1.1.0
 - LWP::Protocol::https is required on redhat
-* Mon Apr 29 2016 Lennart Betz <lennart.betz@netways.de>
+* Mon Apr 29 2016 Lennart Betz <lennart.betz@netways.de> 1.0.0-1
 - initial setup

@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+export DH_VERBOSE = 1
+export DEST=$$(pwd)/debian/netways-plugins-apache-status
+
+override_dh_auto_install:
+	mkdir -p ${DEST}/usr/lib/nagios/plugins
+	install -m755 check_apache_status.pl ${DEST}/usr/lib/nagios/plugins/
+
+%:
+	dh $@
+

@@ -1,0 +1,14 @@
+Source: netways-plugins-apache-status
+Section: contrib
+Priority: optional
+Maintainer: Lennart Betz <lennart.betz@netways.de>
+Build-Depends: debhelper (>= 11)
+Standards-Version: 4.1.3
+Homepage: https://github.com/lbetz/check_apache_status
+
+Package: netways-plugins-apache-status
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, procps, libmonitoring-plugin-perl,
+              liblwp-protocol-https-perl
+Description: Monitoring Plugins - check_apache_status.pl
+ Checks against the apache status site.
