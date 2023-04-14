@@ -3,6 +3,11 @@
 ## [1.4.3](https://github.com/lbetz/check_apache_status/tree/1.4.3) (2023-04-14)
 [Full Changelog](https://github.com/lbetz/check_apache_status/compare/v1.4.2...1.4.3)
 
+**Implemented enhancements:**
+
+- Rename RPM package name [\#15](https://github.com/lbetz/check_apache_status/pull/15) ([lbetz](https://github.com/lbetz))
+- Feature/debpkg [\#14](https://github.com/lbetz/check_apache_status/pull/14) ([lbetz](https://github.com/lbetz))
+
 **Fixed bugs:**
 
 - Extend status?auto to get the whole Scoreboard [\#13](https://github.com/lbetz/check_apache_status/pull/13) ([mdicss](https://github.com/mdicss))

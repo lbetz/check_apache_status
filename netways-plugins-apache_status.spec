@@ -45,6 +45,7 @@ rm -rf %buildroot
 
 %files -n nagios-plugins-apache_status
 %defattr(-,root,root)
+%doc MACOS.md CHANGELOG.md LICENSE AUTHORS
 # avoid build dependecy of nagios - own the dirs
 %if 0%{?suse_version}
 %dir %{_libdir}/nagios
@@ -57,6 +58,7 @@ rm -rf %buildroot
 - Bugfix release version 1.4.3
 - fix #13 Extend status?auto to get the whole Scoreboard
 - Rename package to netways-plugins-apache-status
+- Add docs
 * Mon Apr 20 2020 Lennart Betz <lennart.betz@netways.de> 1.4.2-1
 - Bugfix release version 1.4.2
 - fix #12 fix for SSLv3 errors
